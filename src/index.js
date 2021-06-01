@@ -68,11 +68,12 @@ function App() {
     }
 
     const updateResults = (hits) => {
-      // Update results state:
+      // Update results state using React Hooks:
       setResults(hits)
     }
 
-    const makeCallToAPI = axios
+    // Make the call to the API using axios
+    axios
       .get(encodedURI)
       .then(({ data }) => {
         updateResults(data.hits)
@@ -106,36 +107,18 @@ function App() {
 
   return (
     <div className="App">
-      <h1>HackerNews API React / Redux Example</h1>
-      <h3>{errors}</h3>
-      <h2>Previous searches: (React Hooks)</h2>
-      <ul>
-        {searches.map((query, i) => (
-          <Search
-            query={query}
-            // Prevent duplicate keys by appending index:
-            key={query + i}
-          />
-        ))}
-      </ul>
-      <h2>Previous searches: (Redux)</h2>
-      <ul>
-        {reduxSearches.map((query, i) => (
-          <Search
-            query={query}
-            // Prevent duplicate keys by appending index:
-            key={query + i}
-          />
-        ))}
-      </ul>
+      <h2>
+        How to Query the HackerNews API with React Hooks or Redux to Store
+        Search Terms
+      </h2>
 
-      <div className="break" />
+      {errors && <h3>{errors}</h3>}
 
       <form onSubmit={submitHandler}>
         <div>
           <input
             className="search-field-input"
-            placeholder="Search for..."
+            placeholder="Search HackerNews for..."
             type="text"
             onChange={updateQuery}
             onKeyPress={keyPressed}
@@ -150,7 +133,47 @@ function App() {
         </div>
       </form>
 
-      <div className="break" />
+      <hr />
+
+      <h3>Previous searches: (React Hooks)</h3>
+      <ul>
+        {searches.length > 0 ? (
+          searches.map((query, i) => (
+            <Search
+              query={query}
+              // Prevent duplicate keys by appending index:
+              key={query + i}
+            />
+          ))
+        ) : (
+          <li>
+            <em>Searches will appear here</em>
+          </li>
+        )}
+      </ul>
+
+      <h3>
+        Previous searches: <em>(Redux)</em>
+      </h3>
+      <ul>
+        {reduxSearches.length > 0 ? (
+          reduxSearches.map((query, i) => (
+            <Search
+              query={query}
+              // Prevent duplicate keys by appending index:
+              key={query + i}
+            />
+          ))
+        ) : (
+          <li>
+            <em>Searches will appear here</em>
+          </li>
+        )}
+      </ul>
+
+      <hr />
+
+      <h3>Search Results</h3>
 
       <ul className="searchResults">
         {results.map((hit, i) => (
