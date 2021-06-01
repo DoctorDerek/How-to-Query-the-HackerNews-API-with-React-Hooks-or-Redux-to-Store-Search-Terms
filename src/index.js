@@ -152,9 +152,7 @@ function App() {
         )}
       </ul>
 
-      <h3>
-        Previous searches: <em>(Redux)</em>
-      </h3>
+      <h3>Previous searches: (Redux)</h3>
       <ul>
         {reduxSearches.length > 0 ? (
           reduxSearches.map((query, i) => (
